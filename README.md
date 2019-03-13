@@ -12,8 +12,4 @@ tech used
 - `rematch`
 - `react-redux`
 
-<!-- complementary tech used
-- `babel-plugin-module-resolver`
-- `react-native-picker-select`
-- `react-native-popup-dialog` -->
-
+further explanation to be added later
