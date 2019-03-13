@@ -1,0 +1,15 @@
+{
+  "presets": ["module:metro-react-native-babel-preset"],
+  "sourceMaps": true,
+  "plugins": [
+    ["module-resolver", {
+      "extensions": [".ts", ".tsx"],
+      "root": ["./src"],
+      "alias": {
+        "^@src/(.+)": "./src/\\1",
+        "test": "./test",
+        "underscore": "lodash"
+      }
+    }]
+  ]
+}
