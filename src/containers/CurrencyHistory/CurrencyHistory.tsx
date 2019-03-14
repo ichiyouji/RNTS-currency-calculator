@@ -16,34 +16,7 @@ import { CurrencyListItem, HistoryListItem } from '@src/constants/types';
 
 const styles = StyleSheet.create({
   mainContainer: {
-    // paddingTop: 80,
-    flexDirection: 'column',
-  },
-  titleContainer: {
-    height: defaultStyles.deviceHeight / 3,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  titleStyle: {
-    color: colors.green,
-    fontSize: 24,
-  },
-  inputContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  inputWrapper: {
-    // borderWidth: 1,
-    width: defaultStyles.deviceWidth * 0.8,
-    // height: defaultStyles.deviceHeight * 0.3,
-    flexDirection: 'row',
-    alignItems: 'center',
-    flexGrow: 1,
-    paddingVertical: 30,
-  },
-  inputWrapperTop: {
-    borderBottomWidth: 1,
-    borderBottomColor: colors.green,
+    flex: 1,
   },
 });
 
