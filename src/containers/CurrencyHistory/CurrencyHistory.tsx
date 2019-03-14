@@ -76,20 +76,10 @@ class Count extends PureComponent<Props> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  currencyList: state.currency.currencyList,
-  initialValue: state.currency.initialValue,
-  targetValue: state.currency.targetValue,
-  initialCurrency: state.currency.initialCurrency,
-  targetCurrency: state.currency.targetCurrency,
   currencyHistoryList: state.history.currencyHistoryList,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchCurrency: dispatch.currency.getCurrencyList,
-  setInitialValue: (value: string) => dispatch.currency.setInitialValue(value),
-  initialCurrencyChange: (value: string) => dispatch.currency.setInitialCurrency(value),
-  targetCurrencyChange: (value: string) => dispatch.currency.setTargetCurrency(value),
-  saveToHistory: (param: any) => dispatch.history.storeCurrencyHistory(param),
   selectFromHistory: (param: any) => dispatch.history.selectFromHistory(param),
 });
 
