@@ -22,6 +22,8 @@ const formatHistoryList = (state: HistoryState, payload: HistoryListItem) => {
 
   currencyHistoryList.unshift(payload);
 
+  if(currencyHistoryList.length > 8) currencyHistoryList.pop();
+
   return currencyHistoryList;
 }
 

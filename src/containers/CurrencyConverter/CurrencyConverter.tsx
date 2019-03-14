@@ -3,8 +3,10 @@ import {
   View,
   Text,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { historyScreen } from '@src/routes';
 
 import { RootState, Dispatch } from '@src/redux/store';
 import CurrencyInput from '@src/components/CurrencyInput/CurrencyInput';
@@ -17,6 +19,7 @@ import { CurrencyListItem, HistoryListItem } from '@src/constants/types';
 
 const styles = StyleSheet.create({
   mainContainer: {
+    paddingTop: 80,
     flexDirection: 'column',
   },
   titleContainer: {
@@ -33,11 +36,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputWrapper: {
+    // borderWidth: 1,
     width: defaultStyles.deviceWidth * 0.8,
+    // height: defaultStyles.deviceHeight * 0.3,
     flexDirection: 'row',
     alignItems: 'center',
     flexGrow: 1,
-    paddingVertical: 10,
+    paddingVertical: 30,
+  },
+  inputWrapperTop: {
+    borderBottomWidth: 1,
+    borderBottomColor: colors.green,
+  },
+  recentButton: {
+    padding: 12,
+    margin: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.green,
+  },
+  recentText: {
+    fontSize: 16,
+    color: colors.white,
   },
 });
 
@@ -46,7 +66,7 @@ type connectedProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof map
 type Props = connectedProps;
 
 const mapCurrencyData = (item: CurrencyListItem, index: number) => ({
-  label: item.currency,
+  label: item.currency + " " + item.name,
   value: item.currency,
 })
 
@@ -77,9 +97,7 @@ class Count extends PureComponent<Props> {
   }
 
   _toggleHistoryList = () => {
-    this.setState({
-      dialogVisible: !this.state.dialogVisible,
-    })
+    return historyScreen(this.props.componentId);
   }
 
   _recentSelected = (param: HistoryListItem) => () => {
@@ -91,14 +109,15 @@ class Count extends PureComponent<Props> {
     console.log(this.props.currencyHistoryList);
 		return (
 			<View style={styles.mainContainer}>
-        <View style={styles.titleContainer}>
+        {/* <View style={styles.titleContainer}>
           <Text style={styles.titleStyle}>
             Currency Converter
           </Text>
-        </View>
+        </View> */}
 				<View style={styles.inputContainer}>
-          <View style={styles.inputWrapper}>
+          <View style={[styles.inputWrapper, styles.inputWrapperTop]}>
             <CurrencyPicker
+              defaultCurrency={this.props.initialCurrency}
               value={this.props.initialCurrency}
               pickerList={this.props.currencyList.map(mapCurrencyData)}
               onChange={this.props.initialCurrencyChange}
@@ -107,11 +126,12 @@ class Count extends PureComponent<Props> {
               value={this.props.initialValue}
               onChange={this._setInitialValue}
               defaultValue={'0'}
-              placeholder={`input amount in ${this.props.initialCurrency}`}
+              placeholder={`input in ${this.props.initialCurrency}`}
             />
           </View>
           <View style={styles.inputWrapper}>
             <CurrencyPicker
+              defaultCurrency={this.props.targetCurrency}
               value={this.props.targetCurrency}
               pickerList={this.props.currencyList.map(mapCurrencyData)}
               onChange={this.props.targetCurrencyChange}
@@ -120,16 +140,24 @@ class Count extends PureComponent<Props> {
               value={this.props.targetValue}
               onChange={this._setInitialValue}
               defaultValue={'0'}
-              placeholder={`result amount in ${this.props.targetCurrency}`}
+              placeholder={`result in ${this.props.targetCurrency}`}
               editable={false}
             />
 				  </View>
-          <CurrencyHistory
+          <TouchableOpacity
+            style={styles.recentButton}
+            onPress={this._toggleHistoryList}
+          >
+            <Text style={styles.recentText}>
+              Recent Conversion
+            </Text>
+          </TouchableOpacity>
+          {/* <CurrencyHistory
             data={this.props.currencyHistoryList}
             visible={this.state.dialogVisible}
             onPress={this._toggleHistoryList}
             onRecentSelected={this._recentSelected}
-          />
+          /> */}
 				</View>
 			</View>
 		)

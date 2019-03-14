@@ -1,6 +1,7 @@
 export interface CurrencyListItem {
   currency: string;
   rate: string;
+  name: string;
 }
 
 export interface HistoryListItem {

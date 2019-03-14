@@ -13,14 +13,16 @@ export type CurrencyState = {
   loading: boolean,
 };
 
-const formatResult = (result: any) => {
-  const rates = Object.keys(result.rates).map((key) => {
-    return { currency: key, rate: result.rates[key] };
+const formatResult = (rates: any, symbols: any) => {
+  const formattedRates = Object.keys(rates).map((key) => {
+    return {
+      currency: key,
+      rate: rates[key],
+      name: symbols[key]
+    };
   });
 
-  return [
-    { currency: result.base, rate: 1 }
-  ].concat(rates);
+  return formattedRates;
 }
 
 const findInCurrencyRate = (array: Array<CurrencyListItem>, name: string) => {
@@ -127,8 +129,9 @@ export default createModel({
   effects: () => {
     return {
       async getCurrencyList(): Promise<void> {
-        const result = formatResult(await CurrencyService.fetchCurrency());
-        this.setCurrencyList(result);
+        const rates = await CurrencyService.fetchRates();
+        const symbols = await CurrencyService.fetchSymbols();
+        this.setCurrencyList(formatResult(rates, symbols));
       }
     }
   }

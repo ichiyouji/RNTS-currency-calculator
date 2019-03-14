@@ -5,7 +5,6 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import Dialog, { DialogContent } from 'react-native-popup-dialog';
 import colors from '@src/constants/colors';
 import { HistoryListItem } from '@src/constants/types';
 
@@ -23,7 +22,7 @@ const styles = StyleSheet.create({
   },
   recentTitleContainer: {
     padding: 12,
-    width: 200,
+    // width: 200,
     borderBottomWidth: 1,
     borderBottomColor: colors.green,
     alignItems: 'center',
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
   },
   recentCell: {
     padding: 12,
-    width: 200,
+    // width: 200,
     borderBottomWidth: 1,
     borderBottomColor: colors.ultraLightGrey,
     alignItems: 'center',
@@ -72,7 +71,9 @@ class CurrencyHistory extends PureComponent<Props> {
   render(){
     return(
       <View>
-        <TouchableOpacity
+        {this._renderHistoryCell()}
+
+        {/* <TouchableOpacity
           style={styles.recentButton}
           onPress={this.props.onPress}
         >
@@ -90,7 +91,7 @@ class CurrencyHistory extends PureComponent<Props> {
             </View>
             {this._renderHistoryCell()}
           </DialogContent>
-        </Dialog>
+        </Dialog> */}
       </View>
     )
   }
@@ -98,8 +99,6 @@ class CurrencyHistory extends PureComponent<Props> {
 
 interface Props {
   data: Array<HistoryListItem>,
-  visible: boolean,
-  onPress(): void,
   onRecentSelected(value: any): any,
 }
 

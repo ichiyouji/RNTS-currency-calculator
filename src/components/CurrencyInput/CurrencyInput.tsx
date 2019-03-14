@@ -10,21 +10,21 @@ import colors from '@src/constants/colors';
 const styles = StyleSheet.create({
   textInputStyle: {
     flexGrow: 1,
-    fontSize: 20,
+    fontSize: 32,
     color: colors.black,
     textAlign: 'right',
     padding: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.green,
+    // borderBottomWidth: 1,
+    // borderBottomColor: colors.green,
   },
   disabledTextInputStyle: {
     flexGrow: 1,
-    fontSize: 20,
+    fontSize: 32,
     color: colors.grey,
     textAlign: 'right',
     padding: 12,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.grey,
+    // borderBottomWidth: 1,
+    // borderBottomColor: colors.grey,
   }
 })
 
