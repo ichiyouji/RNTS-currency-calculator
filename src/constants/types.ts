@@ -8,3 +8,7 @@ export interface HistoryListItem {
   initialCurrency: string,
   targetCurrency: string,
 }
+
+export interface commonScreenProps {
+  componentId: string,
+}

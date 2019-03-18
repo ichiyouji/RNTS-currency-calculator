@@ -3,14 +3,13 @@ import {
   View,
   Text,
   TouchableOpacity,
-  TouchableWithoutFeedback,
   StyleSheet,
   Picker,
   Modal,
 } from 'react-native';
 
-import PickerSelect from 'react-native-picker-select';
 import colors from '@src/constants/colors';
+import defaultStyles from '@src/constants/defaultStyles';
 
 const styles = StyleSheet.create({
   pickerContainer: {
@@ -31,11 +30,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   modalContent: {
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-    height: 280,
+    // borderWidth: 2,
+    // borderColor: colors.green,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    // height: 280,
+    height: defaultStyles.deviceHeight/2,
     justifyContent: 'center',
-    backgroundColor: colors.green,
+    backgroundColor: colors.ultraLightGrey,
   },
 })
 
@@ -52,8 +54,6 @@ class CurrencyPicker extends PureComponent<Props, State> {
     }
   }
 
-  _pickerRefs = React.createRef<PickerSelect>();
-
   _togglePicker = () => {
     this.setState({
       showPicker: !this.state.showPicker,
@@ -61,17 +61,17 @@ class CurrencyPicker extends PureComponent<Props, State> {
   }
 
   _renderItems = () => {
-    return this.props.pickerList.map((item: any) => (
+    return this.props.pickerList.map((item) => (
       <Picker.Item
         label={item.label}
         value={item.value}
         key={item.label}
-        color={colors.white}
+        color={colors.green}
       />
     ))
   }
 
-  _onChange = (value:any, index:number) => {
+  _onChange = (value: string, index: number) => {
     const { onChange } = this.props;
 
     onChange(value);
@@ -118,10 +118,15 @@ class CurrencyPicker extends PureComponent<Props, State> {
   }
 }
 
+interface listItem {
+  label: string
+  value: string
+}
+
 interface Props {
   defaultCurrency: string
   value: string
-  pickerList: any
+  pickerList: Array<listItem>
   style: any
   onChange(value: string): void
 }

@@ -1,21 +1,19 @@
 import React, { PureComponent } from 'react';
 import {
   View,
-  Text,
   StyleSheet,
-  TouchableOpacity,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { historyScreen } from '@src/routes';
+import { Navigation } from "react-native-navigation";
 
+import { historyScreen } from '@src/routes';
 import { RootState, Dispatch } from '@src/redux/store';
 import CurrencyInput from '@src/components/CurrencyInput/CurrencyInput';
 import CurrencyPicker from '@src/components/CurrencyPicker/CurrencyPicker';
-import CurrencyHistory from '@src/components/CurrencyHistory/CurrencyHistory';
 import * as utils from '@src/constants/utils';
 import colors from '@src/constants/colors';
 import defaultStyles from '@src/constants/defaultStyles';
-import { CurrencyListItem, HistoryListItem } from '@src/constants/types';
+import { CurrencyListItem, HistoryListItem, commonScreenProps } from '@src/constants/types';
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -36,9 +34,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputWrapper: {
-    // borderWidth: 1,
     width: defaultStyles.deviceWidth * 0.8,
-    // height: defaultStyles.deviceHeight * 0.3,
     flexDirection: 'row',
     alignItems: 'center',
     flexGrow: 1,
@@ -63,33 +59,64 @@ const styles = StyleSheet.create({
 
 type connectedProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-type Props = connectedProps;
+type Props = connectedProps & commonScreenProps;
 
 const mapCurrencyData = (item: CurrencyListItem, index: number) => ({
   label: item.currency + " " + item.name,
   value: item.currency,
 })
 
-class Count extends PureComponent<Props> {
-  constructor(props: Props){
-    super(props);
+class CurrencyConverter extends PureComponent<Props> {
+  static options() {
+    return {
+      topBar: {
+        rightButtons: {
+          id: 'history',
+          // text: 'history',
+          component: {
+            name: 'topBar.button.history',
+          }
+        }
+      }
+    };
   }
-  
+
+  constructor(props: Props) {
+    super(props);
+    Navigation.mergeOptions(this.props.componentId, {
+      topBar: {
+        rightButtons: [{
+          id: 'history',
+          component: {
+            name: 'topBar.button.history',
+            passProps: {
+              onPress: this.navigationButtonPressed
+            } 
+          }
+        }]
+      }
+    })
+  }
+
   state = {
     dialogVisible: false,
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchCurrency();
+  }
+
+  navigationButtonPressed = () => {
+    return historyScreen(this.props.componentId);
   }
 
   _setInitialValue = (value: string) => {
     const { initialCurrency, targetCurrency } = this.props;
 
     const strip = utils.cleanInputValue(value)
-    
+
     this.props.setInitialValue(strip);
-    
+
     this.props.saveToHistory({
       initialCurrency,
       targetCurrency
@@ -105,16 +132,16 @@ class Count extends PureComponent<Props> {
     this._toggleHistoryList();
   }
 
-	render() {
+  render() {
     console.log(this.props.currencyHistoryList);
-		return (
-			<View style={styles.mainContainer}>
+    return (
+      <View style={styles.mainContainer}>
         {/* <View style={styles.titleContainer}>
           <Text style={styles.titleStyle}>
             Currency Converter
           </Text>
         </View> */}
-				<View style={styles.inputContainer}>
+        <View style={styles.inputContainer}>
           <View style={[styles.inputWrapper, styles.inputWrapperTop]}>
             <CurrencyPicker
               defaultCurrency={this.props.initialCurrency}
@@ -143,25 +170,11 @@ class Count extends PureComponent<Props> {
               placeholder={`result in ${this.props.targetCurrency}`}
               editable={false}
             />
-				  </View>
-          <TouchableOpacity
-            style={styles.recentButton}
-            onPress={this._toggleHistoryList}
-          >
-            <Text style={styles.recentText}>
-              Recent Conversion
-            </Text>
-          </TouchableOpacity>
-          {/* <CurrencyHistory
-            data={this.props.currencyHistoryList}
-            visible={this.state.dialogVisible}
-            onPress={this._toggleHistoryList}
-            onRecentSelected={this._recentSelected}
-          /> */}
-				</View>
-			</View>
-		)
-	}
+          </View>
+        </View>
+      </View>
+    )
+  }
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -182,5 +195,5 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   selectFromHistory: (param: any) => dispatch.history.selectFromHistory(param),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Count)
+export default connect(mapStateToProps, mapDispatchToProps)(CurrencyConverter)
 

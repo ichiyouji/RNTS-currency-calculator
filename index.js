@@ -1,15 +1,13 @@
 /** @format */
 
-// import {AppRegistry} from 'react-native';
 import { Navigation } from "react-native-navigation";
-// import App from './App';
 import { withReduxStoreWrapper } from './App';
-// import {name as appName} from './app.json';
-import store from '@src/redux/store';
+
 import CurrencyConverter from '@src/containers/CurrencyConverter/CurrencyConverter';
 import CurrencyHistory from '@src/containers/CurrencyHistory/CurrencyHistory';
+import CustomIcon from '@src/components/CustomIcon/CustomIcon';
 
-// AppRegistry.registerComponent(appName, () => App);
+Navigation.registerComponent("topBar.button.history", () => CustomIcon);
 
 Navigation.registerComponent(`RNTS.main`, () => (props) => withReduxStoreWrapper(CurrencyConverter, props), () => CurrencyConverter);
 Navigation.registerComponent(`RNTS.second`, () => (props) => withReduxStoreWrapper(CurrencyHistory, props), () => CurrencyHistory);
@@ -25,7 +23,7 @@ Navigation.events().registerAppLaunchedListener(() => {
               options: {
                 topBar: {
                   title: {
-                    text: 'LaLiLuLeLo'
+                    text: 'LaLiLuLeLo',
                   }
                 }
               }
@@ -35,4 +33,13 @@ Navigation.events().registerAppLaunchedListener(() => {
       }
     }
   });
+});
+
+Navigation.setDefaultOptions({
+  topBar: {
+    backButton: {
+      title: 'back',
+      visible: true
+    },
+  },
 });

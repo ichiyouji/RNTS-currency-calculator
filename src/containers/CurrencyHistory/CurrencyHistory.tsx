@@ -9,10 +9,7 @@ import { Navigation } from "react-native-navigation";
 
 import { RootState, Dispatch } from '@src/redux/store';
 import CurrencyHistory from '@src/components/CurrencyHistoryList/CurrencyHistoryList';
-import * as utils from '@src/constants/utils';
-import colors from '@src/constants/colors';
-import defaultStyles from '@src/constants/defaultStyles';
-import { CurrencyListItem, HistoryListItem } from '@src/constants/types';
+import { HistoryListItem, commonScreenProps } from '@src/constants/types';
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -22,13 +19,12 @@ const styles = StyleSheet.create({
 
 type connectedProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps>;
 
-type Props = connectedProps;
+type Props = connectedProps & commonScreenProps;
 
 class Count extends PureComponent<Props> {
   constructor(props: Props){
     super(props);
   }
-  
 
   _recentSelected = (param: HistoryListItem) => () => {
     this.props.selectFromHistory(param);

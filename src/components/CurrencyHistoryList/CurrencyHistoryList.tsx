@@ -72,26 +72,6 @@ class CurrencyHistory extends PureComponent<Props> {
     return(
       <View>
         {this._renderHistoryCell()}
-
-        {/* <TouchableOpacity
-          style={styles.recentButton}
-          onPress={this.props.onPress}
-        >
-          <Text style={styles.recentText}>
-            Recent Conversion
-          </Text>
-        </TouchableOpacity>
-        <Dialog
-          visible={this.props.visible}
-          onTouchOutside={this.props.onPress}
-        >
-          <DialogContent>
-            <View style={styles.recentTitleContainer}>
-              <Text style={styles.recentTitleText}>Recent Conversion</Text>
-            </View>
-            {this._renderHistoryCell()}
-          </DialogContent>
-        </Dialog> */}
       </View>
     )
   }
