@@ -45,6 +45,10 @@ const styles = StyleSheet.create({
 })
 
 class CurrencyHistory extends PureComponent<Props> {
+  constructor(props: Props) {
+    super(props);
+  }
+
   _renderHistoryCell = () => {
     if(this.props.data.length === 0) {
       return (

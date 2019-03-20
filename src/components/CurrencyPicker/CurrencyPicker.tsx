@@ -21,23 +21,20 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   pickerStyle: {
-    // height: 300,
   },
   pickerButtonText: {
     fontSize: 16,
+    color: colors.text,
   },
   modalSpacer: {
     flex: 1,
   },
   modalContent: {
-    // borderWidth: 2,
-    // borderColor: colors.green,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
-    // height: 280,
     height: defaultStyles.deviceHeight/2,
     justifyContent: 'center',
-    backgroundColor: colors.ultraLightGrey,
+    backgroundColor: colors.modalBG,
   },
 })
 
@@ -66,7 +63,7 @@ class CurrencyPicker extends PureComponent<Props, State> {
         label={item.label}
         value={item.value}
         key={item.label}
-        color={colors.green}
+        color={colors.text}
       />
     ))
   }

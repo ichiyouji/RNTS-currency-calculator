@@ -11,20 +11,16 @@ const styles = StyleSheet.create({
   textInputStyle: {
     flexGrow: 1,
     fontSize: 32,
-    color: colors.black,
+    color: colors.text,
     textAlign: 'right',
     padding: 12,
-    // borderBottomWidth: 1,
-    // borderBottomColor: colors.green,
   },
   disabledTextInputStyle: {
     flexGrow: 1,
     fontSize: 32,
-    color: colors.grey,
+    color: colors.text,
     textAlign: 'right',
     padding: 12,
-    // borderBottomWidth: 1,
-    // borderBottomColor: colors.grey,
   }
 })
 
@@ -45,7 +41,7 @@ interface Props {
   defaultValue: string,
   placeholder: string,
   editable?: boolean,
-  onChange(value: string): void,
+  onChange?(value: string): void,
 }
 
 CurrencyInput.defaultProps = {

@@ -6,7 +6,7 @@ import {
 import { connect } from 'react-redux';
 import { Navigation } from "react-native-navigation";
 
-import { historyScreen } from '@src/routes';
+import { historyScreen, HISTORY_TOPBAR_BUTTON } from '@src/routes';
 import { RootState, Dispatch } from '@src/redux/store';
 import CurrencyInput from '@src/components/CurrencyInput/CurrencyInput';
 import CurrencyPicker from '@src/components/CurrencyPicker/CurrencyPicker';
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   titleStyle: {
-    color: colors.green,
+    color: colors.text,
     fontSize: 24,
   },
   inputContainer: {
@@ -42,18 +42,7 @@ const styles = StyleSheet.create({
   },
   inputWrapperTop: {
     borderBottomWidth: 1,
-    borderBottomColor: colors.green,
-  },
-  recentButton: {
-    padding: 12,
-    margin: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.green,
-  },
-  recentText: {
-    fontSize: 16,
-    color: colors.white,
+    borderBottomColor: colors.border,
   },
 });
 
@@ -67,30 +56,18 @@ const mapCurrencyData = (item: CurrencyListItem, index: number) => ({
 })
 
 class CurrencyConverter extends PureComponent<Props> {
-  static options() {
-    return {
-      topBar: {
-        rightButtons: {
-          id: 'history',
-          // text: 'history',
-          component: {
-            name: 'topBar.button.history',
-          }
-        }
-      }
-    };
-  }
-
   constructor(props: Props) {
     super(props);
     Navigation.mergeOptions(this.props.componentId, {
       topBar: {
         rightButtons: [{
-          id: 'history',
+          id: HISTORY_TOPBAR_BUTTON,
           component: {
-            name: 'topBar.button.history',
+            name: HISTORY_TOPBAR_BUTTON,
             passProps: {
-              onPress: this.navigationButtonPressed
+              onPress: this.navigationButtonPressed,
+              name: 'history',
+              colors: colors.text,
             } 
           }
         }]
@@ -136,11 +113,6 @@ class CurrencyConverter extends PureComponent<Props> {
     console.log(this.props.currencyHistoryList);
     return (
       <View style={styles.mainContainer}>
-        {/* <View style={styles.titleContainer}>
-          <Text style={styles.titleStyle}>
-            Currency Converter
-          </Text>
-        </View> */}
         <View style={styles.inputContainer}>
           <View style={[styles.inputWrapper, styles.inputWrapperTop]}>
             <CurrencyPicker
@@ -165,7 +137,6 @@ class CurrencyConverter extends PureComponent<Props> {
             />
             <CurrencyInput
               value={this.props.targetValue}
-              onChange={this._setInitialValue}
               defaultValue={'0'}
               placeholder={`result in ${this.props.targetCurrency}`}
               editable={false}

@@ -22,6 +22,16 @@ type connectedProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof map
 type Props = connectedProps & commonScreenProps;
 
 class Count extends PureComponent<Props> {
+  static options() {
+    return {
+      topBar: {
+        title: {
+          text: 'Conversion History'
+        },
+      },
+    };
+  }
+
   constructor(props: Props){
     super(props);
   }
@@ -32,7 +42,6 @@ class Count extends PureComponent<Props> {
   }
 
 	render() {
-    console.log(this.props.currencyHistoryList);
 		return (
 			<View style={styles.mainContainer}>
         <CurrencyHistory
